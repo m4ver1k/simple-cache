@@ -1,9 +1,8 @@
 -module(simple_cache).
 -behaviour(gen_server).
-%-include_lib("eunit/include/eunit.hrl").
 
 %% API
--export([start/1, stop/1, start_link/1]).
+-export([stop/1, start_link/0]).
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2]).
 
 -record(cache,{
@@ -11,15 +10,12 @@
         items = #{}
 }).
 
-start(Name) ->
-   %_sup:start_child(Name).
-ok.
 
 stop(Name) ->
    gen_server:call(Name, stop).
 
-start_link(Name) ->
-   gen_server:start_link({local, Name}, ?MODULE, [{name,Name}], []).
+start_link() ->
+   gen_server:start_link({local, ?MODULE}, ?MODULE, [{name,?MODULE}], []).
 
 init(Args) ->
     

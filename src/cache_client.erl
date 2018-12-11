@@ -6,6 +6,8 @@
     delete/2
 ]).
 
+-export([ start/0, stop/0 ]).
+
 put(Cache,K,V) ->
     gen_server:call(Cache,{put,K,V}).
 
@@ -15,3 +17,9 @@ get(Cache,K) ->
 
 delete(Cache,K)->
     gen_server:cast(Cache,{delete,K}).
+
+start() ->
+    application:start(simple_cache).
+
+stop() ->
+    application:stop(simple_cache).

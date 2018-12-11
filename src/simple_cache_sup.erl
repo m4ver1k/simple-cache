@@ -31,20 +31,22 @@ start_link() ->
 %% Before OTP 18 tuples must be used to specify a child. e.g.
 %% Child :: {Id,StartFunc,Restart,Shutdown,Type,Modules}
 init([]) ->
-    % SupFlags=#{
-    %     strategy =>one_for_one,
-    %     intensity =>4,
-    %     period =>3200
-    % },
-    % Child=#{
-    %     id => Module,
-    %     start => {Module,start_link,[]},
-    %     restart => permanent,
-    %     shutdown =>2000,
-    %     type => worker,
-    %     modules =>[Module]
-    % },
-    {ok, { {one_for_all, 0, 1}, []} }.
+    SupFlags=#{
+        strategy =>one_for_one,
+        intensity =>4,
+        period =>3200
+    },
+    Child=[
+        #{
+            id => simple_cache_worker,
+            start => { simple_cache, start_link,[] },
+            restart => permanent,
+            shutdown =>2000,
+            type => worker,
+            modules =>[ simple_cache ]
+        }
+    ],
+    {ok, {SupFlags,Child} }.
 
 %%====================================================================
 %% Internal functions
