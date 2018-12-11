@@ -38,6 +38,11 @@ handle_call({put,Key,Value},_From,Cache)->
     NewItems = maps:put(Key,Value,Items),
     {reply,ok,Cache#cache{items = NewItems} }.
 
+handle_cast({delete,Key},Cache) ->
+    {cache,_,Items} = Cache,
+    NewItems = maps:remove(Key,Items),
+    {noreply,Cache#cache{items = NewItems} };
+
 handle_cast(_Msg, State) ->
    {noreply, State}.
 

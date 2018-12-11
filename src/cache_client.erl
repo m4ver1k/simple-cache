@@ -14,4 +14,4 @@ get(Cache,K) ->
     Value.
 
 delete(Cache,K)->
-    gen_server:call(Cache,{delete,K}).
+    gen_server:cast(Cache,{delete,K}).
