@@ -30,8 +30,13 @@ handle_call(stop, _From, State) ->
 
 handle_call({get,Key},_From,Cache) ->
     {cache,_,Items}=Cache,
-    Value=maps:get(Key,Items,undefined),
-    {reply,{ok,Value},Cache}.
+    Value = maps:get(Key,Items,undefined),
+    {reply,{ok,Value},Cache};
+
+handle_call({put,Key,Value},_From,Cache)->
+    {cache,_,Items}=Cache,
+    NewItems = maps:put(Key,Value,Items),
+    {reply,ok,Cache#cache{items = NewItems} }.
 
 handle_cast(_Msg, State) ->
    {noreply, State}.

@@ -12,7 +12,9 @@ cache_test_()->
 
 test_cache(_Pid)->
     [
-        ?_assertEqual(undefined,cache_client:get(?Cache,"Name"))
+        ?_assertEqual(undefined,cache_client:get(?Cache,"Name")),
+        ?_assertEqual(ok,cache_client:put(?Cache,"Name","M4ver1k")),
+        ?_assertEqual("M4ver1k",cache_client:get(?Cache,"Name"))
     ].
 
 start()->
