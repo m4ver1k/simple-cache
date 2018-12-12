@@ -1,25 +1,27 @@
 -module(cache_client).
 
 -export([
-    put/3,
-    get/2,
-    delete/2
+    put/2,
+    get/1,
+    delete/1
 ]).
 
 -export([ start/0, stop/0 ]).
 
-put(Cache,K,V) ->
-    gen_server:call(Cache,{put,K,V}).
+-define(CACHE,simple_cache).
 
-get(Cache,K) ->
-    {ok,Value}=gen_server:call(Cache,{get,K}),
+put(K,V) ->
+    gen_server:call(?CACHE,{put,K,V}).
+
+get(K) ->
+    {ok,Value}=gen_server:call(?CACHE,{get,K}),
     Value.
 
-delete(Cache,K)->
-    gen_server:cast(Cache,{delete,K}).
+delete(K)->
+    gen_server:cast(?CACHE,{delete,K}).
 
 start() ->
-    application:start(simple_cache).
+    application:start(?CACHE).
 
 stop() ->
-    application:stop(simple_cache).
+    application:stop(?CACHE).

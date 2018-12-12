@@ -1,6 +1,6 @@
 -module(simple_cache_test).
 -include_lib("eunit/include/eunit.hrl").
--define(Cache,simple_cache).
+-define(CACHE,simple_cache).
 
 cache_test_()->
     {
@@ -12,15 +12,15 @@ cache_test_()->
 
 test_cache(_Pid)->
     [
-        ?_assertEqual(undefined,cache_client:get(?Cache,"Name")),
-        ?_assertEqual(ok,cache_client:put(?Cache,"Name","M4ver1k")),
-        ?_assertEqual("M4ver1k",cache_client:get(?Cache,"Name")),
-        ?_assertEqual(ok,cache_client:delete(?Cache,"Name")),
-        ?_assertEqual(undefined,cache_client:get(?Cache,"Name"))
+        ?_assertEqual(undefined,cache_client:get("Name")),
+        ?_assertEqual(ok,cache_client:put("Name","M4ver1k")),
+        ?_assertEqual("M4ver1k",cache_client:get("Name")),
+        ?_assertEqual(ok,cache_client:delete("Name")),
+        ?_assertEqual(undefined,cache_client:get("Name"))
     ].
 
 start()->
-    simple_cache:start_link(?Cache).
+    simple_cache:start_link().
 
-stop(Pid) ->
-    simple_cache:stop(?Cache).
+stop(_) ->
+    simple_cache:stop(?CACHE).
